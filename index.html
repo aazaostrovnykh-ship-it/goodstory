@@ -35,6 +35,7 @@
             --gold-dark: #B88A1E;      
             --card-bg: #FFFFFF;
             --border-soft: #EBE3D5;
+            --brown-dark: #4A2F1D; /* Новый темно-коричневый цвет для заголовка */
         }
 
         * {
@@ -75,14 +76,12 @@
             border-bottom: 1px solid var(--border-soft);
         }
 
-        /* Теперь элементы распределены по краям */
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        /* Новый стиль для истории в шапке */
         .header-story {
             display: flex;
             align-items: center;
@@ -140,10 +139,11 @@
             border: 1px solid rgba(212, 175, 55, 0.3);
         }
 
+        /* ОБНОВЛЕННЫЙ ЗАГОЛОВОК */
         .hero-text h1 {
-            font-size: 4rem;
+            font-size: 3.4rem; /* Уменьшили размер */
             margin-bottom: 25px;
-            color: var(--text-main);
+            color: var(--brown-dark); /* Темно-коричневый цвет */
         }
 
         .hero-text p {
@@ -536,8 +536,9 @@
                 gap: 50px;
             }
 
+            /* Уменьшаем заголовок на планшетах */
             .hero-text h1 {
-                font-size: 3rem;
+                font-size: 2.8rem; 
             }
 
             .hero-text p {
@@ -556,7 +557,6 @@
                 display: none;
             }
 
-            /* На планшетах шапку выстраиваем в колонку */
             .header-content {
                 flex-direction: column;
                 gap: 15px;
@@ -572,8 +572,9 @@
         }
 
         @media (max-width: 576px) {
+            /* Уменьшаем заголовок на телефонах */
             .hero-text h1 {
-                font-size: 2.4rem;
+                font-size: 2.2rem; 
             }
             .contact-info {
                 flex-direction: column;
@@ -591,7 +592,7 @@
                 padding: 0 15px;
             }
             .header-story {
-                font-size: 1rem; /* Уменьшаем текст для узких экранов */
+                font-size: 1rem;
                 text-align: center;
                 justify-content: center;
             }
@@ -600,15 +601,13 @@
 </head>
 <body>
 
-    <!-- Обновленная Шапка -->
+    <!-- Шапка -->
     <header>
         <div class="container header-content">
-            <!-- История слева -->
             <div class="header-story">
                 <span>Создано с любовью мамой и дочкой — Олей и Настей</span>
                 <span class="pulse-heart">❤</span>
             </div>
-            <!-- Телефон справа -->
             <div class="contact-info">
                 <a href="tel:89222151902">8 (922) 215-19-02</a>
             </div>
@@ -621,7 +620,9 @@
             <div class="hero-text">
                 <span class="hero-tagline">Эксклюзивный подарок</span>
                 
+                <!-- Обновленный заголовок -->
                 <h1>Книга, в которой главный герой — Ваш ребенок</h1>
+                
                 <p>Погрузите малыша в захватывающий квест с любимыми героями. Поучительная история, красочные иллюстрации и ощущение настоящего чуда, созданное специально для него.</p>
                 <a href="#order" class="btn">Выбрать издание</a>
             </div>
