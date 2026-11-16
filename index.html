@@ -113,16 +113,18 @@
             flex: 1;
         }
 
-        /* Блок: Подпись авторов вверху */
+        /* ОБНОВЛЕННЫЙ БЛОК: Подпись авторов вверху */
         .hero-authors {
             display: flex;
             align-items: center;
             gap: 10px;
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: 1.05rem;
+            font-size: 1.35rem; /* Увеличили размер */
+            font-weight: 600;   /* Сделали жирнее */
             color: var(--gold-dark);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            line-height: 1.4;
         }
 
         .hero-tagline {
@@ -486,7 +488,7 @@
         .pulse-heart {
             display: inline-block;
             color: #E63946;
-            font-size: 1.1em;
+            font-size: 1.2em; /* Чуть увеличили сердечко */
             margin-left: 5px;
             animation: pulse 1.5s infinite;
             transform-origin: center;
@@ -592,7 +594,7 @@
                 padding: 0 15px;
             }
             .hero-authors {
-                font-size: 0.95rem;
+                font-size: 1.15rem; /* На мобильных чуть меньше, чтобы не переносилось плохо */
             }
         }
     </style>
@@ -612,7 +614,7 @@
     <section class="hero">
         <div class="container hero-content">
             <div class="hero-text">
-                <!-- История вверху -->
+                <!-- Обновленная история вверху -->
                 <div class="hero-authors">
                     <span>Создано с любовью мамой и дочкой — Олей и Настей</span>
                     <span class="pulse-heart">❤</span>
