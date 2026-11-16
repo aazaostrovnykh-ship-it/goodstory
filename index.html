@@ -12,12 +12,12 @@
     <style>
         /* --- БАЗОВЫЕ НАСТРОЙКИ (Теплая палитра) --- */
         :root {
-            --bg-main: #FCFAF6;        /* Теплый, сливочный фон */
-            --text-main: #2D2A26;      /* Мягкий черный (темно-коричневый) */
-            --text-muted: #7A7265;     /* Теплый серый для описаний */
-            --gold-main: #D4AF37;      /* Золото */
-            --gold-light: #F3D586;     /* Светлое золото для градиента */
-            --gold-dark: #B88A1E;      /* Темное золото для ховера */
+            --bg-main: #FCFAF6;        
+            --text-main: #2D2A26;      
+            --text-muted: #7A7265;     
+            --gold-main: #D4AF37;      
+            --gold-light: #F3D586;     
+            --gold-dark: #B88A1E;      
             --card-bg: #FFFFFF;
             --border-soft: #EBE3D5;
         }
@@ -63,6 +63,7 @@
         .header-content {
             display: flex;
             justify-content: flex-end;
+            align-items: center;
         }
 
         .contact-info {
@@ -97,7 +98,6 @@
             flex: 1;
         }
 
-        /* Нарядная плашка */
         .hero-tagline {
             display: inline-block;
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(243, 213, 134, 0.2));
@@ -130,7 +130,6 @@
             position: relative;
         }
 
-        /* Теплая, мягкая тень для фото */
         .hero-image img {
             width: 100%;
             border-radius: 12px;
@@ -140,7 +139,6 @@
             border: 5px solid #FFFFFF;
         }
 
-        /* Декоративная золотая арка */
         .hero-image::before {
             content: '';
             position: absolute;
@@ -154,9 +152,12 @@
             opacity: 0.3;
         }
 
-        /* --- ЕДИНЫЕ ЗОЛОТЫЕ КНОПКИ --- */
+        /* --- КНОПКИ (с иконками) --- */
         .btn {
-            display: inline-block;
+            display: inline-flex; /* Позволяет выравнивать иконку и текст */
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Расстояние между иконкой и текстом */
             background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-main) 100%);
             color: #FFFFFF;
             padding: 18px 45px;
@@ -433,6 +434,7 @@
         .card .btn {
             width: 100%;
             padding: 16px 20px;
+            font-size: 0.9rem; /* Чуть меньше шрифт, чтобы влезло */
         }
 
         /* --- ПОДВАЛ --- */
@@ -451,11 +453,13 @@
 
         footer .footer-contacts {
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            gap: 40px;
+            align-items: center;
+            gap: 20px;
         }
 
-        footer .footer-contacts a {
+        footer .footer-contacts a.phone-link {
             color: var(--text-main);
             text-decoration: none;
             font-size: 1.2rem;
@@ -464,7 +468,7 @@
             border-bottom: 1px solid transparent;
         }
 
-        footer .footer-contacts a:hover {
+        footer .footer-contacts a.phone-link:hover {
             color: var(--gold-dark);
             border-bottom: 1px solid var(--gold-dark);
         }
@@ -520,11 +524,6 @@
                 gap: 10px;
                 align-items: center;
             }
-            footer .footer-contacts {
-                flex-direction: column;
-                gap: 15px;
-                align-items: center;
-            }
             .hero {
                 padding: 60px 0;
             }
@@ -550,7 +549,6 @@
         <div class="container hero-content">
             <div class="hero-text">
                 <span class="hero-tagline">Эксклюзивный подарок</span>
-                <!-- ИСПРАВЛЕНО: Ваш с большой буквы -->
                 <h1>Книга, в которой главный герой — Ваш ребенок</h1>
                 <p>Погрузите малыша в захватывающий квест с любимыми героями. Поучительная история, красочные иллюстрации и ощущение настоящего чуда, созданное специально для него.</p>
                 <a href="#order" class="btn">Выбрать издание</a>
@@ -600,7 +598,7 @@
         </div>
     </section>
 
-    <!-- НОВЫЙ БЛОК: Поводы для подарка -->
+    <!-- Блок "Поводы для подарка" -->
     <section class="occasions">
         <div class="container">
             <div class="occasions-header">
@@ -664,7 +662,11 @@
                         <li>Яркие цветные иллюстрации</li>
                         <li>Удобен для маленьких ручек</li>
                     </ul>
-                    <button class="btn">Заказать</button>
+                    <!-- ОБНОВЛЕННАЯ КНОПКА -->
+                    <a href="https://max.ru/u/f9LHodD0cOKs9NV8zrO_aT-s0aWx5JNFo4dWGcW_sC9HNuP3-0sUrXf7dto" target="_blank" class="btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        Заказать
+                    </a>
                 </div>
 
                 <!-- А5 -->
@@ -678,7 +680,11 @@
                         <li>Плотная мелованная бумага</li>
                         <li>Долговечное издание</li>
                     </ul>
-                    <button class="btn">Заказать</button>
+                    <!-- ОБНОВЛЕННАЯ КНОПКА -->
+                    <a href="https://max.ru/u/f9LHodD0cOKs9NV8zrO_aT-s0aWx5JNFo4dWGcW_sC9HNuP3-0sUrXf7dto" target="_blank" class="btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        Заказать
+                    </a>
                 </div>
 
                 <!-- А4 Премиум -->
@@ -694,7 +700,11 @@
                         <li>Плотная бумага премиум-класса</li>
                         <li>Идеальный подарок на память</li>
                     </ul>
-                    <button class="btn">Заказать</button>
+                    <!-- ОБНОВЛЕННАЯ КНОПКА -->
+                    <a href="https://max.ru/u/f9LHodD0cOKs9NV8zrO_aT-s0aWx5JNFo4dWGcW_sC9HNuP3-0sUrXf7dto" target="_blank" class="btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        Заказать
+                    </a>
                 </div>
 
             </div>
@@ -706,7 +716,12 @@
         <div class="container">
             <p>Создаем персональные книги для ваших детей</p>
             <div class="footer-contacts">
-                <a href="tel:89222151902">8 (922) 215-19-02</a>
+                <a href="tel:89222151902" class="phone-link">8 (922) 215-19-02</a>
+                <!-- КНОПКА MAX В ПОДВАЛЕ -->
+                <a href="https://max.ru/u/f9LHodD0cOKs9NV8zrO_aT-s0aWx5JNFo4dWGcW_sC9HNuP3-0sUrXf7dto" target="_blank" class="btn" style="font-size: 0.85rem; padding: 12px 30px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    Написать в MAX
+                </a>
             </div>
         </div>
     </footer>
