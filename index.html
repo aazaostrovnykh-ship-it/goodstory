@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Персональная книга-сказка | С любовью!</title>
+    <title>Персональная книга-сказка | Теплый премиум</title>
     
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
@@ -95,9 +95,11 @@
 
         .contact-info {
             display: flex;
-            gap: 30px;
+            flex-direction: column; 
+            gap: 5px;
             font-size: 0.95rem;
             font-weight: 600;
+            text-align: right;
         }
 
         .contact-info a {
@@ -415,7 +417,7 @@
         }
 
         .card h3 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 8px;
         }
 
@@ -478,16 +480,55 @@
             font-size: 1.15rem;
             color: var(--text-main);
             max-width: 650px;
-            margin: 0 auto 35px auto;
+            margin: 0 auto 25px auto;
             line-height: 1.6;
         }
 
-        /* Пульсирующее сердце */
+        /* --- НОВЫЙ БЛОК: ПРОМОКОД --- */
+        .promo-block {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 35px auto;
+            padding: 20px 40px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 2px dashed var(--gold-main);
+            border-radius: 20px;
+        }
+
+        .promo-heart {
+            display: inline-block;
+            color: #D00000;
+            font-size: 2.5rem;
+            font-weight: 700;
+            animation: pulse 1.5s infinite;
+            transform-origin: center;
+            line-height: 1;
+        }
+
+        .promo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--brown-dark);
+        }
+
+        .promo-text strong {
+            color: var(--gold-dark);
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            margin: 0 5px;
+        }
+
+        /* Пульсирующее сердце — общее */
         .pulse-heart {
             display: inline-block;
-            color: #E63946;
-            font-size: 1.2em; 
-            margin-left: 5px;
+            color: #D00000;
+            font-size: 1.9em;
+            font-weight: 700;
+            margin-left: 8px;
+            vertical-align: middle;
             animation: pulse 1.5s infinite;
             transform-origin: center;
         }
@@ -559,6 +600,10 @@
                 flex-direction: column;
                 gap: 15px;
             }
+
+            .contact-info {
+                text-align: center;
+            }
             
             .features {
                 padding: 60px 20px;
@@ -593,6 +638,18 @@
                 text-align: center;
                 justify-content: center;
             }
+            
+            /* Адаптив для промокода на телефонах */
+            .promo-block {
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+                width: 90%;
+            }
+            .promo-text {
+                font-size: 1.1rem;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -601,13 +658,13 @@
     <!-- Шапка -->
     <header>
         <div class="container header-content">
-            <!-- ИЗМЕНЕНО: Теперь здесь Ольга и Анастасия -->
             <div class="header-story">
-                <span>Создано с любовью мамой и дочкой — Ольгой и Анастасией</span>
+                <span>Сделано с любовью</span>
                 <span class="pulse-heart">❤</span>
             </div>
             <div class="contact-info">
-                <a href="tel:89222151902">8 (922) 215-19-02</a>
+                <a href="tel:89960320581">8 (996) 032-05-81</a>
+                <a href="mailto:a.a.zaostrovnykh@yandex.ru">a.a.zaostrovnykh@yandex.ru</a>
             </div>
         </div>
     </header>
@@ -730,43 +787,43 @@
                         <li>Яркие цветные иллюстрации</li>
                         <li>Удобен для маленьких ручек</li>
                     </ul>
-                    <a href="https://max.ru/u/f9LHodD0cOKs9NV8zrO_aT-s0aWx5JNFo4dWGcW_sC9HNuP3-0sUrXf7dto" target="_blank" class="btn">
+                    <a href="https://max.ru/u/f9LHodD0cOLakzBstNNYEfyHyuyCqD5HHT9MV4L_Wvv586AaxOfTeBccrfw" target="_blank" rel="noopener" class="btn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                         Заказать
                     </a>
                 </div>
 
-                <!-- А5 -->
+                <!-- Книга 14,5х21 см -->
                 <div class="card">
-                    <h3>Книга А5</h3>
+                    <h3>Книга 14,5×21 см</h3>
                     <p class="format">Компактный твердый переплет</p>
                     <div class="price">4 500 ₽</div>
                     <ul>
                         <li>Твердый переплет</li>
-                        <li>Удобный формат А5</li>
+                        <li>Формат 14,5×21 см</li>
                         <li>Плотная мелованная бумага</li>
                         <li>Долговечное издание</li>
                     </ul>
-                    <a href="https://max.ru/u/f9LHodD0cOKs9NV8zrO_aT-s0aWx5JNFo4dWGcW_sC9HNuP3-0sUrXf7dto" target="_blank" class="btn">
+                    <a href="https://max.ru/u/f9LHodD0cOLakzBstNNYEfyHyuyCqD5HHT9MV4L_Wvv586AaxOfTeBccrfw" target="_blank" rel="noopener" class="btn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                         Заказать
                     </a>
                 </div>
 
-                <!-- А4 Премиум -->
+                <!-- Книга 17х24 см (Премиум) -->
                 <div class="card premium">
                     <div class="card-badge">Лучший выбор</div>
-                    <h3>Книга А4</h3>
+                    <h3>Книга 17×24 см</h3>
                     <p class="format">Большой подарочный формат</p>
                     <div class="price">6 000 ₽</div>
                     <ul>
                         <li>Твердый переплет</li>
-                        <li>Большой формат А4</li>
+                        <li>Формат 17×24 см</li>
                         <li>Крупные детализированные иллюстрации</li>
                         <li>Плотная бумага премиум-класса</li>
                         <li>Идеальный подарок на память</li>
                     </ul>
-                    <a href="https://max.ru/u/f9LHodD0cOKs9NV8zrO_aT-s0aWx5JNFo4dWGcW_sC9HNuP3-0sUrXf7dto" target="_blank" class="btn">
+                    <a href="https://max.ru/u/f9LHodD0cOLakzBstNNYEfyHyuyCqD5HHT9MV4L_Wvv586AaxOfTeBccrfw" target="_blank" rel="noopener" class="btn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                         Заказать
                     </a>
@@ -779,16 +836,22 @@
     <!-- Подвал -->
     <footer>
         <div class="container">
-            <!-- ОСТАВЛЕНО БЕЗ ИЗМЕНЕНИЙ: Оля и Настя -->
             <div class="footer-story">
-                Мы — Оля и Настя, мама и дочка. Создаем каждую книгу с любовью и трепетом, чтобы подарить Вашему ребенку настоящее чудо.<span class="pulse-heart">❤</span>
+                Сделано с любовью. Каждая книга создается с любовью и трепетом, чтобы подарить Вашему ребенку настоящее чудо.<span class="pulse-heart">❤</span>
+            </div>
+
+            <!-- НОВЫЙ БЛОК: ПРОМОКОД С БОЛЬШИМ СЕРДЦЕМ -->
+            <div class="promo-block">
+                <span class="promo-heart">❤</span>
+                <span class="promo-text">по промокоду <strong>"Таня"</strong> скидка 10%</span>
             </div>
             
             <p class="subtitle">Свяжитесь с нами для заказа</p>
             
             <div class="footer-contacts">
-                <a href="tel:89222151902" class="phone-link">8 (922) 215-19-02</a>
-                <a href="https://max.ru/u/f9LHodD0cOKs9NV8zrO_aT-s0UrXf7dto" target="_blank" class="btn" style="font-size: 0.85rem; padding: 12px 30px;">
+                <a href="tel:89960320581" class="phone-link">8 (996) 032-05-81</a>
+                <a href="mailto:a.a.zaostrovnykh@yandex.ru" class="phone-link">a.a.zaostrovnykh@yandex.ru</a>
+                <a href="https://max.ru/u/f9LHodD0cOLakzBstNNYEfyHyuyCqD5HHT9MV4L_Wvv586AaxOfTeBccrfw" target="_blank" rel="noopener" class="btn" style="font-size: 0.85rem; padding: 12px 30px;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                     Написать в MAX
                 </a>
