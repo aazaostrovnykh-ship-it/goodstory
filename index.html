@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Персональная книга-сказка для Вашего ребенка | С любовью </title>
-    <meta name="description" content="Создание персональных книг-сказок для детей. Идеальный подарок с любимыми героями.">
+    <title>Персональная книга-сказка | 12 и 24 страницы | Теплый премиум</title>
+    <meta name="description" content="Создание персональных книг-сказок для детей. Журнал на 12 страниц и подарочные книги на 24 страницы. Идеальный подарок с любимыми героями.">
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
@@ -312,11 +312,13 @@
             border-bottom: 1px solid var(--gold-dark);
         }
 
-        /* --- ФЛИПБУК --- */
+        /* --- АДАПТИВНЫЙ ФЛИПБУК --- */
         .catalog-flipbook {
-            padding: 60px 20px 70px;
+            /* Добавлен большой отступ сверху, чтобы шапка не перекрывала книгу */
+            padding: 100px 20px 70px; 
             background: linear-gradient(180deg, #FFFDF8 0%, var(--bg-main) 100%);
             border-bottom: 1px solid var(--border-soft);
+            overflow: hidden;
         }
         .flipbook-wrap {
             max-width: 1100px;
@@ -329,12 +331,13 @@
         .flipbook-header { text-align: center; }
         .flipbook-header h2 { font-size: 2.6rem; color: var(--brown-dark); margin-bottom: 10px; }
         .flipbook-header p { color: var(--text-muted); font-size: 1rem; }
+        
         .flipbook {
             width: 100%;
+            max-width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 500px;
         }
         .flip-page {
             background: #fff;
@@ -367,7 +370,13 @@
             0%, 100% { opacity: 0.55; }
             50% { opacity: 0.95; }
         }
-        .flipbook-controls { display: flex; align-items: center; justify-content: center; gap: 22px; }
+        .flipbook-controls { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 22px; 
+            margin-top: 10px;
+        }
         .flip-btn {
             background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-main) 100%);
             color: #fff; border: none;
@@ -380,6 +389,7 @@
             display: flex; align-items: center; justify-content: center;
             font-family: 'Montserrat', sans-serif;
             padding-bottom: 4px;
+            -webkit-tap-highlight-color: transparent;
         }
         .flip-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px -5px rgba(212, 175, 55, 0.65); }
         .flip-btn:active { transform: scale(0.94); }
@@ -421,7 +431,11 @@
             .contact-info { text-align: center; }
             .features { padding: 60px 20px; }
             .features-grid { padding: 0; }
+            
+            .flipbook-header h2 { font-size: 2.2rem; }
+            .catalog-flipbook { padding: 80px 10px 50px; }
         }
+
         @media (max-width: 576px) {
             .hero-text h1 { font-size: 2.2rem; }
             .contact-info { flex-direction: column; gap: 10px; align-items: center; }
@@ -431,10 +445,12 @@
             .header-story { font-size: 1rem; text-align: center; justify-content: center; }
             .promo-block { flex-direction: column; gap: 10px; padding: 20px; width: 90%; }
             .promo-text { font-size: 1.1rem; text-align: center; }
-            .catalog-flipbook { padding: 40px 10px 50px; }
-            .flipbook-header h2 { font-size: 1.9rem; }
-            .flipbook { min-height: 400px; }
+            
+            .catalog-flipbook { padding: 60px 10px 40px; }
+            .flipbook-header h2 { font-size: 1.8rem; }
+            .flipbook-header p { font-size: 0.9rem; }
             .flip-btn { width: 44px; height: 44px; font-size: 1.2rem; }
+            .flipbook-controls { gap: 15px; }
         }
     </style>
 </head>
@@ -654,10 +670,11 @@
         const nextBtn = document.getElementById('flipNext');
 
         const PDF_URL = 'kate.pdf';
-        const RENDER_SCALE = 1.5;
+        const DPR = window.devicePixelRatio || 1;
+        const RENDER_SCALE = DPR > 1 ? 2 : 1.5; 
         const JPEG_QUALITY = 0.85;
-        const MAX_PAGE_WIDTH = 550;
-        const MIN_PAGE_WIDTH = 280;
+        
+        let pageFlipInstance = null;
 
         function showError(html) {
             flipbookEl.innerHTML =
@@ -695,7 +712,7 @@
                 throw new Error('Сетевая ошибка при запросе PDF. Возможно, файл недоступен или блокируется браузером. ' + netErr.message);
             }
             if (!response.ok) {
-                throw new Error('Сервер вернул ошибку ' + response.status + ' (' + response.statusText + '). Файл ' + url + ' не найден или доступ к нему запрещён.');
+                throw new Error('Сервер вернул ошибку ' + response.status + ' (' + response.statusText + ').');
             }
             return await response.arrayBuffer();
         }
@@ -768,33 +785,50 @@
                 pageElements.forEach(function (el) { flipbookEl.appendChild(el); });
                 await new Promise(function (r) { requestAnimationFrame(function () { r(); }); });
 
-                var pageFlip = new St.PageFlip(flipbookEl, {
-                    width: baseW, height: baseH,
-                    size: 'stretch',
-                    minWidth: MIN_PAGE_WIDTH, maxWidth: MAX_PAGE_WIDTH,
-                    minHeight: Math.round(MIN_PAGE_WIDTH * ratio),
-                    maxHeight: Math.round(MAX_PAGE_WIDTH * ratio),
+                // ★ ДИНАМИЧЕСКИЙ РАСЧЕТ РАЗМЕРОВ ДЛЯ МОБИЛЬНЫХ
+                const isMobile = window.innerWidth < 768;
+                // На мобилке ограничиваем ширину экраном и высоту до 65% высоты экрана
+                const maxW = isMobile ? Math.min(window.innerWidth - 30, 450) : 550;
+                const maxH = isMobile ? window.innerHeight * 0.65 : Math.round(550 * ratio);
+                const minW = isMobile ? 200 : 280;
+
+                pageFlipInstance = new St.PageFlip(flipbookEl, {
+                    width: baseW, 
+                    height: baseH,
+                    size: 'stretch', 
+                    minWidth: minW, 
+                    maxWidth: maxW,
+                    minHeight: Math.round(minW * ratio),
+                    maxHeight: maxH,
                     showCover: true,
-                    usePortrait: true,
-                    mobileScrollSupport: false,
+                    usePortrait: true, 
+                    mobileScrollSupport: false, 
                     maxShadowOpacity: 0.4,
                     drawShadow: true,
                     flippingTime: 800,
                     startZIndex: 0,
                     autoSize: true
                 });
-                pageFlip.loadFromHTML(pageElements);
+                pageFlipInstance.loadFromHTML(pageElements);
 
-                prevBtn.addEventListener('click', function () { pageFlip.flipPrev(); });
-                nextBtn.addEventListener('click', function () { pageFlip.flipNext(); });
-                pageFlip.on('flip', function (e) {
+                prevBtn.addEventListener('click', function () { pageFlipInstance.flipPrev(); });
+                nextBtn.addEventListener('click', function () { pageFlipInstance.flipNext(); });
+                pageFlipInstance.on('flip', function (e) {
                     pageInfoEl.textContent = (e.data + 1) + ' / ' + totalPages;
                 });
                 document.addEventListener('keydown', function (e) {
-                    if (e.key === 'ArrowLeft') pageFlip.flipPrev();
-                    if (e.key === 'ArrowRight') pageFlip.flipNext();
+                    if (e.key === 'ArrowLeft') pageFlipInstance.flipPrev();
+                    if (e.key === 'ArrowRight') pageFlipInstance.flipNext();
                 });
                 pageInfoEl.textContent = '1 / ' + totalPages;
+
+                window.addEventListener('resize', function() {
+                    if (pageFlipInstance) {
+                        setTimeout(function() {
+                            pageFlipInstance.update();
+                        }, 150);
+                    }
+                });
 
                 var rendered = 0;
                 for (var p = 1; p <= totalPages; p++) {
@@ -822,8 +856,7 @@
                     '<br><br><b>Что проверить:</b><br>' +
                     '1. Открывается ли файл напрямую: <a href="' + PDF_URL + '" target="_blank">' + PDF_URL + '</a><br>' +
                     '2. Есть ли файл в корне репозитория (без папок).<br>' +
-                    '3. Прошло ли 5–10 минут после загрузки файла на GitHub (Pages обновляется с задержкой).<br>' +
-                    '4. Нет ли в настройках Pages ошибок с кастомным доменом.');
+                    '3. Прошло ли 5–10 минут после загрузки файла на GitHub (Pages обновляется с задержкой).');
             }
         }
 
