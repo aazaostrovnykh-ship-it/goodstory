@@ -12,7 +12,7 @@
             m[i].l=1*new Date();
             for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
             k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=114286356', 'ym');
+        })(window, document,'script', 'https://mc.yandex.ru/metrika/tag.js?id=114286356', 'ym');
 
         ym(114286356, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
@@ -650,11 +650,10 @@
         const nextBtn = document.getElementById('flipNext');
 
         const PDF_URL = 'kate.pdf';
-        const RENDER_SCALE = 1.5;          // было 2 — теперь быстрее и легче
+        const RENDER_SCALE = 1.5;
         const JPEG_QUALITY = 0.85;
         const MAX_PAGE_WIDTH = 550;
         const MIN_PAGE_WIDTH = 280;
-        const INITIAL_PAGES = 3;           // сколько страниц рендерим ДО показа книги
 
         function showError(html) {
             flipbookEl.innerHTML =
@@ -675,35 +674,15 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc =
             'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        function pickLocalFile() {
-            return new Promise(function (resolve) {
-                flipbookEl.innerHTML = '';
-                var wrap = document.createElement('div');
-                wrap.className = 'flipbook-loading';
-                wrap.style.maxWidth = '640px';
-                wrap.style.textAlign = 'left';
-                wrap.style.background = '#fffdf5';
-                wrap.style.border = '1px solid var(--border-soft)';
-                wrap.style.borderRadius = '12px';
-                wrap.style.padding = '24px';
-                wrap.innerHTML =
-                    '<b style="display:block;margin-bottom:12px;color:#4A2F1D;font-size:1.1rem;">' +
-                    'Вы открыли файл локально (file://)</b>' +
-                    'Браузер запрещает читать локальные PDF автоматически. ' +
-                    '<b>Выберите ваш PDF вручную ниже</b> — для проверки этого достаточно. ' +
-                    'На реальном хостинге (http://) книга будет открываться сама.' +
-                    '<div style="margin-top:18px;">' +
-                    '<input type="file" accept="application/pdf" id="pdfPicker" style="font-family:inherit;font-size:1rem;">' +
-                    '</div>';
-                flipbookEl.appendChild(wrap);
-                var input = document.getElementById('pdfPicker');
-                input.addEventListener('change', async function (e) {
-                    var file = e.target.files && e.target.files[0];
-                    if (!file) return;
-                    var buf = await file.arrayBuffer();
-                    resolve({ data: buf });
-                });
-            });
+        // ★ Новая функция: скачиваем PDF как ArrayBuffer
+        async function fetchPdfAsArrayBuffer(url) {
+            statusEl.textContent = 'Скачиваем PDF…';
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Не удалось скачать PDF. Код ответа: ' + response.status);
+            }
+            const arrayBuffer = await response.arrayBuffer();
+            return arrayBuffer;
         }
 
         function withTimeout(promise, ms, msg) {
@@ -736,7 +715,6 @@
             var ctx = canvas.getContext('2d');
             await page.render({ canvasContext: ctx, viewport: viewport }).promise;
             var url = await canvasToJpegUrl(canvas);
-            // освобождаем память от canvas
             canvas.width = 0;
             canvas.height = 0;
             var img = document.createElement('img');
@@ -745,110 +723,105 @@
             return img;
         }
 
-        async function start(source) {
-            statusEl.textContent = 'Загружаем PDF…';
-            flipbookEl.innerHTML = '<div class="flipbook-loading">Загружаем PDF…</div>';
-
-            var options = typeof source === 'string'
-                ? { url: source,
-                    cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
-                    cMapPacked: true,
-                    standardFontDataUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/standard_fonts/' }
-                : { data: source.data };
-
-            var task = pdfjsLib.getDocument(options);
-            var pdf = await withTimeout(task.promise, 20000,
-                'PDF не загрузился за 20 секунд. Проверьте, что файл <b>' + PDF_URL + '</b> лежит рядом с index.html.');
-
-            var totalPages = pdf.numPages;
-            var firstPage = await pdf.getPage(1);
-            var baseViewport = firstPage.getViewport({ scale: 1 });
-            var baseW = Math.round(baseViewport.width);
-            var baseH = Math.round(baseViewport.height);
-            var ratio = baseH / baseW;
-
-            // ── 1. Создаём div-плейсхолдеры для всех страниц сразу
-            var pageElements = [];
-            for (var i = 0; i < totalPages; i++) {
-                var div = document.createElement('div');
-                div.className = 'flip-page';
-                div.style.width = baseW + 'px';
-                div.style.height = baseH + 'px';
-                var ph = document.createElement('div');
-                ph.className = 'page-placeholder';
-                ph.textContent = '…';
-                div.appendChild(ph);
-                pageElements.push(div);
-            }
-
-            flipbookEl.innerHTML = '';
-            pageElements.forEach(function (el) { flipbookEl.appendChild(el); });
-            await new Promise(function (r) { requestAnimationFrame(function () { r(); }); });
-
-            // ── 2. Инициализируем флипбук сразу с плейсхолдерами
-            var pageFlip = new St.PageFlip(flipbookEl, {
-                width: baseW, height: baseH,
-                size: 'stretch',
-                minWidth: MIN_PAGE_WIDTH, maxWidth: MAX_PAGE_WIDTH,
-                minHeight: Math.round(MIN_PAGE_WIDTH * ratio),
-                maxHeight: Math.round(MAX_PAGE_WIDTH * ratio),
-                showCover: true,
-                usePortrait: true,
-                mobileScrollSupport: false,
-                maxShadowOpacity: 0.4,
-                drawShadow: true,
-                flippingTime: 800,
-                startZIndex: 0,
-                autoSize: true
-            });
-            pageFlip.loadFromHTML(pageElements);
-
-            prevBtn.addEventListener('click', function () { pageFlip.flipPrev(); });
-            nextBtn.addEventListener('click', function () { pageFlip.flipNext(); });
-            pageFlip.on('flip', function (e) {
-                pageInfoEl.textContent = (e.data + 1) + ' / ' + totalPages;
-            });
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'ArrowLeft') pageFlip.flipPrev();
-                if (e.key === 'ArrowRight') pageFlip.flipNext();
-            });
-            pageInfoEl.textContent = '1 / ' + totalPages;
-
-            // ── 3. Рендерим страницы по порядку и вставляем картинки
-            var rendered = 0;
-            for (var p = 1; p <= totalPages; p++) {
-                statusEl.textContent = 'Готово ' + rendered + ' из ' + totalPages + ' страниц…';
-                try {
-                    var img = await renderPageToImg(pdf, p);
-                    pageElements[p - 1].innerHTML = '';
-                    pageElements[p - 1].appendChild(img);
-                    rendered++;
-                } catch (pageErr) {
-                    console.error('Ошибка на странице ' + p, pageErr);
-                }
-                // даём браузеру перерисовать кадр
-                await new Promise(function (r) { setTimeout(r, 0); });
-            }
-
-            statusEl.textContent = 'Все ' + totalPages + ' страниц готовы';
-            setTimeout(function () { if (statusEl.textContent === 'Все ' + totalPages + ' страниц готовы') statusEl.textContent = ''; }, 4000);
-        }
-
-        (async function () {
+        async function start() {
             try {
-                if (location.protocol === 'file:') {
-                    var source = await pickLocalFile();
-                    if (!source) return;
-                    await start(source);
-                } else {
-                    await start(PDF_URL);
+                // 1. Скачиваем PDF как бинарные данные (обходим MIME-тип)
+                const pdfData = await withTimeout(
+                    fetchPdfAsArrayBuffer(PDF_URL),
+                    20000,
+                    'PDF не удалось скачать за 20 секунд. Проверьте, что файл <b>' + PDF_URL + '</b> лежит рядом с index.html и доступен по прямой ссылке.'
+                );
+
+                statusEl.textContent = 'Загружаем PDF…';
+                flipbookEl.innerHTML = '<div class="flipbook-loading">Загружаем PDF…</div>';
+
+                // 2. Передаём ArrayBuffer в PDF.js
+                const loadingTask = pdfjsLib.getDocument({ data: pdfData });
+                const pdf = await loadingTask.promise;
+
+                var totalPages = pdf.numPages;
+                var firstPage = await pdf.getPage(1);
+                var baseViewport = firstPage.getViewport({ scale: 1 });
+                var baseW = Math.round(baseViewport.width);
+                var baseH = Math.round(baseViewport.height);
+                var ratio = baseH / baseW;
+
+                // ── Создаём плейсхолдеры для всех страниц
+                var pageElements = [];
+                for (var i = 0; i < totalPages; i++) {
+                    var div = document.createElement('div');
+                    div.className = 'flip-page';
+                    div.style.width = baseW + 'px';
+                    div.style.height = baseH + 'px';
+                    var ph = document.createElement('div');
+                    ph.className = 'page-placeholder';
+                    ph.textContent = '…';
+                    div.appendChild(ph);
+                    pageElements.push(div);
                 }
+
+                flipbookEl.innerHTML = '';
+                pageElements.forEach(function (el) { flipbookEl.appendChild(el); });
+                await new Promise(function (r) { requestAnimationFrame(function () { r(); }); });
+
+                // ── Инициализируем StPageFlip
+                var pageFlip = new St.PageFlip(flipbookEl, {
+                    width: baseW, height: baseH,
+                    size: 'stretch',
+                    minWidth: MIN_PAGE_WIDTH, maxWidth: MAX_PAGE_WIDTH,
+                    minHeight: Math.round(MIN_PAGE_WIDTH * ratio),
+                    maxHeight: Math.round(MAX_PAGE_WIDTH * ratio),
+                    showCover: true,
+                    usePortrait: true,
+                    mobileScrollSupport: false,
+                    maxShadowOpacity: 0.4,
+                    drawShadow: true,
+                    flippingTime: 800,
+                    startZIndex: 0,
+                    autoSize: true
+                });
+                pageFlip.loadFromHTML(pageElements);
+
+                prevBtn.addEventListener('click', function () { pageFlip.flipPrev(); });
+                nextBtn.addEventListener('click', function () { pageFlip.flipNext(); });
+                pageFlip.on('flip', function (e) {
+                    pageInfoEl.textContent = (e.data + 1) + ' / ' + totalPages;
+                });
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'ArrowLeft') pageFlip.flipPrev();
+                    if (e.key === 'ArrowRight') pageFlip.flipNext();
+                });
+                pageInfoEl.textContent = '1 / ' + totalPages;
+
+                // ── Рендерим страницы по порядку
+                var rendered = 0;
+                for (var p = 1; p <= totalPages; p++) {
+                    statusEl.textContent = 'Готово ' + rendered + ' из ' + totalPages + ' страниц…';
+                    try {
+                        var img = await renderPageToImg(pdf, p);
+                        pageElements[p - 1].innerHTML = '';
+                        pageElements[p - 1].appendChild(img);
+                        rendered++;
+                    } catch (pageErr) {
+                        console.error('Ошибка на странице ' + p, pageErr);
+                    }
+                    await new Promise(function (r) { setTimeout(r, 0); });
+                }
+
+                statusEl.textContent = 'Все ' + totalPages + ' страниц готовы';
+                setTimeout(function () {
+                    if (statusEl.textContent === 'Все ' + totalPages + ' страниц готовы') statusEl.textContent = '';
+                }, 4000);
+
             } catch (err) {
                 console.error(err);
                 showError('<b>Ошибка:</b> ' + (err && err.message ? err.message : err) +
                     '<br><br>Откройте консоль (F12 → Console) и пришлите текст ошибки.');
             }
-        })();
+        }
+
+        // Запускаем
+        start();
     })();
     </script>
 
