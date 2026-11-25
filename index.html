@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Персональная книга-сказка | С любовью </title>
+    <title>Персональная книга-сказка | 12 и 24 страницы | Теплый премиум</title>
     <meta name="description" content="Создание персональных книг-сказок для детей. Журнал на 12 страниц и подарочные книги на 24 страницы. Идеальный подарок с любимыми героями.">
 
     <!-- Yandex.Metrika counter -->
@@ -51,9 +51,10 @@
         h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--text-main); line-height: 1.2; }
         .container { max-width: 1140px; margin: 0 auto; padding: 0 30px; }
 
+        /* --- УМЕНЬШЕННАЯ И КОМПАКТНАЯ ШАПКА --- */
         header {
-            padding: 25px 0;
-            background-color: rgba(252, 250, 246, 0.9);
+            padding: 12px 0; /* Было 25px, стало 12px */
+            background-color: rgba(252, 250, 246, 0.95);
             backdrop-filter: blur(10px);
             position: sticky; top: 0; z-index: 100;
             border-bottom: 1px solid var(--border-soft);
@@ -62,17 +63,19 @@
         .header-story {
             display: flex; align-items: center; gap: 8px;
             font-family: 'Playfair Display', serif;
-            font-style: italic; font-size: 1.15rem; font-weight: 600;
+            font-style: italic; font-size: 1.05rem; font-weight: 600;
             color: var(--gold-dark);
         }
         .contact-info {
-            display: flex; flex-direction: column; gap: 5px;
-            font-size: 0.95rem; font-weight: 600; text-align: right;
+            display: flex; 
+            flex-direction: row; /* Контакты в одну строку на ПК */
+            gap: 20px;
+            font-size: 0.9rem; font-weight: 600; text-align: right;
         }
         .contact-info a { color: var(--text-main); text-decoration: none; transition: color 0.3s; }
         .contact-info a:hover { color: var(--gold-dark); }
 
-        .hero { padding: 80px 0 120px; }
+        .hero { padding: 60px 0 100px; }
         .hero-content { display: flex; align-items: center; gap: 70px; }
         .hero-text { flex: 1; }
         .hero-tagline {
@@ -314,8 +317,8 @@
 
         /* --- АДАПТИВНЫЙ ФЛИПБУК --- */
         .catalog-flipbook {
-            /* Добавлен большой отступ сверху, чтобы шапка не перекрывала книгу */
-            padding: 100px 20px 70px; 
+            /* Уменьшен отступ сверху (было 100px) */
+            padding: 30px 20px 50px; 
             background: linear-gradient(180deg, #FFFDF8 0%, var(--bg-main) 100%);
             border-bottom: 1px solid var(--border-soft);
             overflow: hidden;
@@ -326,11 +329,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
         .flipbook-header { text-align: center; }
-        .flipbook-header h2 { font-size: 2.6rem; color: var(--brown-dark); margin-bottom: 10px; }
-        .flipbook-header p { color: var(--text-muted); font-size: 1rem; }
+        .flipbook-header h2 { font-size: 2.4rem; color: var(--brown-dark); margin-bottom: 8px; }
+        .flipbook-header p { color: var(--text-muted); font-size: 0.95rem; }
         
         .flipbook {
             width: 100%;
@@ -375,29 +378,29 @@
             align-items: center; 
             justify-content: center; 
             gap: 22px; 
-            margin-top: 10px;
+            margin-top: 5px;
         }
         .flip-btn {
             background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-main) 100%);
             color: #fff; border: none;
-            width: 50px; height: 50px;
+            width: 45px; height: 45px;
             border-radius: 50%;
-            font-size: 1.4rem; line-height: 1;
+            font-size: 1.3rem; line-height: 1;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px -5px rgba(212, 175, 55, 0.5);
             display: flex; align-items: center; justify-content: center;
             font-family: 'Montserrat', sans-serif;
-            padding-bottom: 4px;
+            padding-bottom: 3px;
             -webkit-tap-highlight-color: transparent;
         }
         .flip-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px -5px rgba(212, 175, 55, 0.65); }
         .flip-btn:active { transform: scale(0.94); }
         .flip-page-info {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1rem; font-weight: 600;
+            font-size: 0.95rem; font-weight: 600;
             color: var(--brown-dark);
-            min-width: 90px; text-align: center;
+            min-width: 80px; text-align: center;
             letter-spacing: 0.5px;
         }
         .flipbook-status {
@@ -427,29 +430,29 @@
             .features-text { text-align: left; }
             .section-title::after { margin: 20px auto 0 auto; }
             .hero-image::before { display: none; }
-            .header-content { flex-direction: column; gap: 15px; }
-            .contact-info { text-align: center; }
+            
+            /* Шапка на планшетах и мобилках снова в колонку */
+            .header-content { flex-direction: column; gap: 8px; }
+            .contact-info { flex-direction: column; gap: 4px; text-align: center; }
+            
             .features { padding: 60px 20px; }
             .features-grid { padding: 0; }
-            
-            .flipbook-header h2 { font-size: 2.2rem; }
-            .catalog-flipbook { padding: 80px 10px 50px; }
+            .flipbook-header h2 { font-size: 2rem; }
+            .catalog-flipbook { padding: 25px 10px 40px; }
         }
 
         @media (max-width: 576px) {
             .hero-text h1 { font-size: 2.2rem; }
-            .contact-info { flex-direction: column; gap: 10px; align-items: center; }
-            .hero { padding: 50px 0 60px; }
+            .hero { padding: 40px 0 50px; }
             .pricing-header h2, .occasions-header h2 { font-size: 2.4rem; }
             .footer-story { font-size: 1rem; padding: 0 15px; }
-            .header-story { font-size: 1rem; text-align: center; justify-content: center; }
+            .header-story { font-size: 0.95rem; }
             .promo-block { flex-direction: column; gap: 10px; padding: 20px; width: 90%; }
             .promo-text { font-size: 1.1rem; text-align: center; }
-            
-            .catalog-flipbook { padding: 60px 10px 40px; }
-            .flipbook-header h2 { font-size: 1.8rem; }
-            .flipbook-header p { font-size: 0.9rem; }
-            .flip-btn { width: 44px; height: 44px; font-size: 1.2rem; }
+            .catalog-flipbook { padding: 20px 10px 30px; }
+            .flipbook-header h2 { font-size: 1.7rem; }
+            .flipbook-header p { font-size: 0.85rem; }
+            .flip-btn { width: 40px; height: 40px; font-size: 1.1rem; }
             .flipbook-controls { gap: 15px; }
         }
     </style>
@@ -785,11 +788,15 @@
                 pageElements.forEach(function (el) { flipbookEl.appendChild(el); });
                 await new Promise(function (r) { requestAnimationFrame(function () { r(); }); });
 
-                // ★ ДИНАМИЧЕСКИЙ РАСЧЕТ РАЗМЕРОВ ДЛЯ МОБИЛЬНЫХ
+                // ★ ДИНАМИЧЕСКИЙ РАСЧЕТ РАЗМЕРОВ ДЛЯ НОУТБУКОВ И МОБИЛОК
                 const isMobile = window.innerWidth < 768;
-                // На мобилке ограничиваем ширину экраном и высоту до 65% высоты экрана
-                const maxW = isMobile ? Math.min(window.innerWidth - 30, 450) : 550;
-                const maxH = isMobile ? window.innerHeight * 0.65 : Math.round(550 * ratio);
+                
+                // Ограничиваем ширину
+                const maxW = isMobile ? Math.min(window.innerWidth - 30, 450) : 500;
+                
+                // Ограничиваем высоту в зависимости от высоты экрана
+                const maxH = isMobile ? Math.min(window.innerHeight * 0.6, 600) : Math.min(window.innerHeight * 0.65, 520);
+                
                 const minW = isMobile ? 200 : 280;
 
                 pageFlipInstance = new St.PageFlip(flipbookEl, {
@@ -799,7 +806,7 @@
                     minWidth: minW, 
                     maxWidth: maxW,
                     minHeight: Math.round(minW * ratio),
-                    maxHeight: maxH,
+                    maxHeight: Math.round(maxH), // Теперь высота ограничена 65% экрана
                     showCover: true,
                     usePortrait: true, 
                     mobileScrollSupport: false, 
