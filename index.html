@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Персональная книга-сказка | Сделано с любовью</title>
+    <title>Персональная книга-сказка | Форматы А5 и А4 | Теплый премиум</title>
     <meta name="description" content="Создание персональных книг-сказок для детей. Журналы в мягком переплете: формат А5 (28 страниц) и А4 (16 или 28 страниц). Идеальный подарок с любимыми героями.">
 
     <!-- Yandex.Metrika counter -->
@@ -40,6 +40,7 @@
             --brown-dark: #4A2F1D;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-main);
@@ -51,7 +52,7 @@
         h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--text-main); line-height: 1.2; }
         .container { max-width: 1140px; margin: 0 auto; padding: 0 30px; }
 
-        /* --- КОМПАКТНАЯ ШАПКА --- */
+        /* --- ШАПКА --- */
         header {
             padding: 12px 0;
             background-color: rgba(252, 250, 246, 0.95);
@@ -66,15 +67,44 @@
             font-style: italic; font-size: 1.05rem; font-weight: 600;
             color: var(--gold-dark);
         }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
         .contact-info {
             display: flex; 
             flex-direction: row;
             gap: 20px;
-            font-size: 0.9rem; font-weight: 600; text-align: right;
+            font-size: 0.95rem; font-weight: 600; text-align: right;
         }
         .contact-info a { color: var(--text-main); text-decoration: none; transition: color 0.3s; }
         .contact-info a:hover { color: var(--gold-dark); }
 
+        .btn-portfolio {
+            background: transparent;
+            color: var(--gold-dark);
+            border: 1px solid var(--gold-main);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .btn-portfolio:hover {
+            background: var(--gold-main);
+            color: #fff;
+            box-shadow: 0 5px 15px -5px rgba(212, 175, 55, 0.5);
+        }
+
+        /* --- ГЛАВНЫЙ ЭКРАН --- */
         .hero { padding: 60px 0 100px; }
         .hero-content { display: flex; align-items: center; gap: 70px; }
         .hero-text { flex: 1; }
@@ -127,6 +157,7 @@
             transform: scale(0.96); filter: brightness(1.05);
         }
 
+        /* --- БЛОК ПРЕИМУЩЕСТВ --- */
         .features {
             padding: 90px 0;
             background-color: #FFFFFF;
@@ -165,6 +196,7 @@
         }
         .feature-icon { color: var(--gold-main); font-size: 1.5rem; line-height: 1; margin-top: 2px; }
 
+        /* --- БЛОК: ПОВОДЫ ДЛЯ ПОДАРКА --- */
         .occasions { padding: 100px 0; }
         .occasions-header { text-align: center; margin-bottom: 60px; }
         .occasions-header h2 { font-size: 3rem; margin-bottom: 15px; }
@@ -191,6 +223,7 @@
         .occasion-card h3 { font-size: 1.3rem; margin-bottom: 10px; font-family: 'Montserrat', sans-serif; font-weight: 600; }
         .occasion-card p { font-size: 0.9rem; color: var(--text-muted); }
 
+        /* --- БЛОК ТАРИФОВ --- */
         .pricing { padding: 110px 0; background-color: #FFFFFF; border-top: 1px solid var(--border-soft); }
         .pricing-header { text-align: center; margin-bottom: 60px; }
         .pricing-header h2 { font-size: 3rem; margin-bottom: 15px; }
@@ -251,6 +284,97 @@
         }
         .card .btn { width: 100%; padding: 16px 20px; font-size: 0.9rem; }
 
+        /* --- ПОРТФОЛИО --- */
+        .portfolio-section { 
+            padding: 100px 0; 
+            background: var(--bg-main); 
+            /* Отступ сверху, чтобы шапка не перекрывала заголовок при скролле */
+            scroll-margin-top: 80px; 
+        }
+        .portfolio-header { text-align: center; margin-bottom: 50px; }
+        .portfolio-header h2 { font-size: 3rem; margin-bottom: 15px; }
+        .portfolio-header p { color: var(--text-muted); font-size: 1.1rem; }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .portfolio-item {
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 10px 30px -10px rgba(45, 42, 38, 0.15);
+            background: #fff;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .portfolio-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(212, 175, 55, 0.4);
+        }
+        .portfolio-item img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* --- ЛАЙТБОКС (ПОЛНОЭКРАННЫЙ ПРОСМОТР) --- */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(20, 15, 10, 0.9); /* Темный фон */
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 8px;
+            border: 4px solid transparent;
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .lightbox.active .lightbox-img {
+            transform: scale(1);
+            /* Золотое свечение */
+            border-color: var(--gold-light);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.8), 0 0 60px rgba(243, 213, 134, 0.5);
+            animation: goldSparkle 2s infinite alternate;
+        }
+        @keyframes goldSparkle {
+            0% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); border-color: var(--gold-main); }
+            100% { box-shadow: 0 0 40px rgba(212, 175, 55, 1), 0 0 80px rgba(243, 213, 134, 0.8); border-color: var(--gold-light); }
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 30px; right: 40px;
+            color: #fff;
+            font-size: 3rem;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            line-height: 1;
+            transition: color 0.3s;
+            z-index: 10000;
+        }
+        .lightbox-close:hover { color: var(--gold-main); }
+
+        /* --- ПОДВАЛ --- */
         footer {
             background-color: var(--bg-main);
             padding: 60px 0; text-align: center;
@@ -315,7 +439,7 @@
             border-bottom: 1px solid var(--gold-dark);
         }
 
-        /* --- АДАПТИВНЫЙ ФЛИПБУК --- */
+        /* --- ФЛИПБУК --- */
         .catalog-flipbook {
             padding: 30px 20px 50px; 
             background: linear-gradient(180deg, #FFFDF8 0%, var(--bg-main) 100%);
@@ -333,7 +457,6 @@
         .flipbook-header { text-align: center; }
         .flipbook-header h2 { font-size: 2.4rem; color: var(--brown-dark); margin-bottom: 8px; }
         .flipbook-header p { color: var(--text-muted); font-size: 0.95rem; }
-        
         .flipbook {
             width: 100%;
             max-width: 100%;
@@ -373,11 +496,7 @@
             50% { opacity: 0.95; }
         }
         .flipbook-controls { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 22px; 
-            margin-top: 5px;
+            display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 5px;
         }
         .flip-btn {
             background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-main) 100%);
@@ -385,12 +504,10 @@
             width: 45px; height: 45px;
             border-radius: 50%;
             font-size: 1.3rem; line-height: 1;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            cursor: pointer; transition: all 0.3s ease;
             box-shadow: 0 8px 20px -5px rgba(212, 175, 55, 0.5);
             display: flex; align-items: center; justify-content: center;
-            font-family: 'Montserrat', sans-serif;
-            padding-bottom: 3px;
+            font-family: 'Montserrat', sans-serif; padding-bottom: 3px;
             -webkit-tap-highlight-color: transparent;
         }
         .flip-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px -5px rgba(212, 175, 55, 0.65); }
@@ -398,31 +515,24 @@
         .flip-page-info {
             font-family: 'Montserrat', sans-serif;
             font-size: 0.95rem; font-weight: 600;
-            color: var(--brown-dark);
-            min-width: 80px; text-align: center;
+            color: var(--brown-dark); min-width: 80px; text-align: center;
             letter-spacing: 0.5px;
         }
         .flipbook-status {
             font-family: 'Montserrat', sans-serif;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            min-height: 1.2em;
-            text-align: center;
+            color: var(--text-muted); font-size: 0.85rem;
+            min-height: 1.2em; text-align: center;
         }
         .flipbook-loading {
             font-family: 'Montserrat', sans-serif;
-            color: var(--text-muted);
-            padding: 40px 20px;
-            text-align: center;
-            font-size: 1rem;
+            color: var(--text-muted); padding: 40px 20px;
+            text-align: center; font-size: 1rem;
         }
 
+        /* --- АДАПТИВНОСТЬ --- */
         @media (max-width: 992px) {
             .hero-content, .features-grid {
-                flex-direction: column;
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 50px;
+                flex-direction: column; grid-template-columns: 1fr; text-align: center; gap: 50px;
             }
             .hero-text h1 { font-size: 2.8rem; }
             .hero-text p { margin: 0 auto 30px auto; }
@@ -430,19 +540,23 @@
             .section-title::after { margin: 20px auto 0 auto; }
             .hero-image::before { display: none; }
             
-            .header-content { flex-direction: column; gap: 8px; }
+            .header-content { flex-direction: column; gap: 15px; }
+            .header-right { flex-direction: column; gap: 15px; }
             .contact-info { flex-direction: column; gap: 4px; text-align: center; }
             
             .features { padding: 60px 20px; }
             .features-grid { padding: 0; }
             .flipbook-header h2 { font-size: 2rem; }
             .catalog-flipbook { padding: 25px 10px 40px; }
+            .portfolio-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+            .portfolio-item img { height: 280px; }
+            .portfolio-section { scroll-margin-top: 150px; } /* Больше отступ на мобилках, т.к. шапка выше */
         }
 
         @media (max-width: 576px) {
             .hero-text h1 { font-size: 2.2rem; }
             .hero { padding: 40px 0 50px; }
-            .pricing-header h2, .occasions-header h2 { font-size: 2.4rem; }
+            .pricing-header h2, .occasions-header h2, .portfolio-header h2 { font-size: 2.4rem; }
             .footer-story { font-size: 1rem; padding: 0 15px; }
             .header-story { font-size: 0.95rem; }
             .promo-block { flex-direction: column; gap: 10px; padding: 20px; width: 90%; }
@@ -452,6 +566,9 @@
             .flipbook-header p { font-size: 0.85rem; }
             .flip-btn { width: 40px; height: 40px; font-size: 1.1rem; }
             .flipbook-controls { gap: 15px; }
+            
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .lightbox-close { top: 15px; right: 20px; font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -463,9 +580,12 @@
                 <span>Сделано с любовью</span>
                 <span class="pulse-heart">❤</span>
             </div>
-            <div class="contact-info">
-                <a href="tel:89960320581">8 (996) 032-05-81</a>
-                <a href="mailto:a.a.zaostrovnykh@yandex.ru">a.a.zaostrovnykh@yandex.ru</a>
+            <div class="header-right">
+                <a href="#portfolio" class="btn-portfolio">Портфолио</a>
+                <div class="contact-info">
+                    <!-- Почту убрали, остался только телефон -->
+                    <a href="tel:89960320581">8 (996) 032-05-81</a>
+                </div>
             </div>
         </div>
     </header>
@@ -533,6 +653,33 @@
                         </div>
                     </li>
                 </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- БЛОК: ПОРТФОЛИО -->
+    <section class="portfolio-section" id="portfolio">
+        <div class="container">
+            <div class="portfolio-header">
+                <h2>Наши работы</h2>
+                <p>Нажмите на картинку, чтобы рассмотреть её в полном размере</p>
+            </div>
+            <div class="portfolio-grid">
+                <!-- Картинка 1 -->
+                <div class="portfolio-item">
+                    <!-- Вставьте сюда ссылку на вашу 1-ю картинку (например, portfolio1.jpg) -->
+                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop" alt="Пример страницы 1" onerror="this.src='https://via.placeholder.com/600x800?text=Portfolio+1'">
+                </div>
+                <!-- Картинка 2 -->
+                <div class="portfolio-item">
+                    <!-- Вставьте сюда ссылку на вашу 2-ю картинку (например, portfolio2.jpg) -->
+                    <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop" alt="Пример страницы 2" onerror="this.src='https://via.placeholder.com/600x800?text=Portfolio+2'">
+                </div>
+                <!-- Картинка 3 -->
+                <div class="portfolio-item">
+                    <!-- Вставьте сюда ссылку на вашу 3-ю картинку (например, portfolio3.jpg) -->
+                    <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop" alt="Пример страницы 3" onerror="this.src='https://via.placeholder.com/600x800?text=Portfolio+3'">
+                </div>
             </div>
         </div>
     </section>
@@ -648,7 +795,7 @@
     <footer>
         <div class="container">
             <div class="footer-story">
-                Сделано с любовью. Каждый журнал создается с трепетом, чтобы подарить Вашему ребенку настоящее чудо.<span class="pulse-heart">❤</span>
+                Сделано с любовью. Каждый журнал (формат А5 или А4) создается с трепетом, чтобы подарить Вашему ребенку настоящее чудо.<span class="pulse-heart">❤</span>
             </div>
             <div class="promo-block">
                 <span class="promo-heart">❤</span>
@@ -657,7 +804,8 @@
             <p class="subtitle">Свяжитесь с нами для заказа</p>
             <div class="footer-contacts">
                 <a href="tel:89960320581" class="phone-link">8 (996) 032-05-81</a>
-                <a href="mailto:a.a.zaostrovnykh@yandex.ru" class="phone-link">a.a.zaostrovnykh@yandex.ru</a>
+                <!-- Почта осталась в подвале -->
+                <a href="mailto:a.a.zaostrovnykh@yandex.ru" class="phone-link" style="font-size: 1.1rem;">a.a.zaostrovnykh@yandex.ru</a>
                 <a href="https://max.ru/u/f9LHodD0cOLakzBstNNYEfyHyuyCqD5HHT9MV4L_Wvv586AaxOfTeBccrfw" target="_blank" rel="noopener" class="btn" style="font-size: 0.85rem; padding: 12px 30px;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                     Написать в MAX
@@ -666,10 +814,44 @@
         </div>
     </footer>
 
+    <!-- ОКНО ПРОСМОТРА (ЛАЙТБОКС) -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img src="" alt="Увеличенное изображение" class="lightbox-img" id="lightbox-img">
+    </div>
+
     <script>
     (function () {
         'use strict';
 
+        // --- ЛОГИКА ЛАЙТБОКСА (ПОРТФОЛИО) ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.querySelector('.lightbox-close');
+        const portfolioItems = document.querySelectorAll('.portfolio-item img');
+
+        portfolioItems.forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Запрещаем скролл сайта, пока открыта картинка
+            });
+        });
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = ''; // Возвращаем скролл
+            setTimeout(() => { lightboxImg.src = ''; }, 400); // Очищаем через 400мс (после анимации)
+        };
+
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // --- ЛОГИКА ФЛИПБУКА (PDF) ---
         const flipbookEl = document.getElementById('flipbook');
         const pageInfoEl = document.getElementById('flipPageInfo');
         const statusEl = document.getElementById('flipStatus');
@@ -754,7 +936,7 @@
             return img;
         }
 
-        async function start() {
+        async function startFlipbook() {
             try {
                 const pdfData = await withTimeout(
                     fetchPdfAsArrayBuffer(PDF_URL),
@@ -792,9 +974,7 @@
                 pageElements.forEach(function (el) { flipbookEl.appendChild(el); });
                 await new Promise(function (r) { requestAnimationFrame(function () { r(); }); });
 
-                // ★ ДИНАМИЧЕСКИЙ РАСЧЕТ РАЗМЕРОВ ДЛЯ НОУТБУКОВ И МОБИЛОК
                 const isMobile = window.innerWidth < 768;
-                
                 const maxW = isMobile ? Math.min(window.innerWidth - 30, 450) : 500;
                 const maxH = isMobile ? Math.min(window.innerHeight * 0.6, 600) : Math.min(window.innerHeight * 0.65, 520);
                 const minW = isMobile ? 200 : 280;
@@ -867,7 +1047,7 @@
             }
         }
 
-        start();
+        startFlipbook();
     })();
     </script>
 
