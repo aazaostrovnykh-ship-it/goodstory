@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Персональная книга-сказка | 12 и 24 страницы | Теплый премиум</title>
-    <meta name="description" content="Создание персональных книг-сказок для детей. Журнал на 12 страниц и подарочные книги на 24 страницы. Идеальный подарок с любимыми героями.">
+    <title>Персональная книга-сказка | Форматы А5 и А4 | Теплый премиум</title>
+    <meta name="description" content="Создание персональных книг-сказок для детей. Журналы в мягком переплете: формат А5 (28 страниц) и А4 (16 или 28 страниц). Идеальный подарок с любимыми героями.">
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
@@ -51,9 +51,9 @@
         h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--text-main); line-height: 1.2; }
         .container { max-width: 1140px; margin: 0 auto; padding: 0 30px; }
 
-        /* --- УМЕНЬШЕННАЯ И КОМПАКТНАЯ ШАПКА --- */
+        /* --- КОМПАКТНАЯ ШАПКА --- */
         header {
-            padding: 12px 0; /* Было 25px, стало 12px */
+            padding: 12px 0;
             background-color: rgba(252, 250, 246, 0.95);
             backdrop-filter: blur(10px);
             position: sticky; top: 0; z-index: 100;
@@ -68,7 +68,7 @@
         }
         .contact-info {
             display: flex; 
-            flex-direction: row; /* Контакты в одну строку на ПК */
+            flex-direction: row;
             gap: 20px;
             font-size: 0.9rem; font-weight: 600; text-align: right;
         }
@@ -317,7 +317,6 @@
 
         /* --- АДАПТИВНЫЙ ФЛИПБУК --- */
         .catalog-flipbook {
-            /* Уменьшен отступ сверху (было 100px) */
             padding: 30px 20px 50px; 
             background: linear-gradient(180deg, #FFFDF8 0%, var(--bg-main) 100%);
             border-bottom: 1px solid var(--border-soft);
@@ -431,7 +430,6 @@
             .section-title::after { margin: 20px auto 0 auto; }
             .hero-image::before { display: none; }
             
-            /* Шапка на планшетах и мобилках снова в колонку */
             .header-content { flex-direction: column; gap: 8px; }
             .contact-info { flex-direction: column; gap: 4px; text-align: center; }
             
@@ -495,7 +493,7 @@
             <div class="hero-text">
                 <span class="hero-tagline">Эксклюзивный подарок</span>
                 <h1>Книга, в которой главный герой — Ваш ребенок</h1>
-                <p>Погрузите малыша в захватывающий квест с любимыми героями. Поучительная история на 12 или 24 страницы, красочные иллюстрации и ощущение настоящего чуда, созданное специально для него.</p>
+                <p>Погрузите малыша в захватывающий квест с любимыми героями. Поучительная история в удобном формате А5 или большом А4, красочные иллюстрации и ощущение настоящего чуда, созданное специально для него.</p>
                 <a href="#order" class="btn">Выбрать издание</a>
             </div>
             <div class="hero-image">
@@ -523,8 +521,8 @@
                     <li>
                         <span class="feature-icon">✦</span>
                         <div>
-                            <strong>Разный объем</strong>
-                            Выбирайте формат: компактный журнал на 12 страниц или подарочную книгу на 24 страницы.
+                            <strong>Разный объем и формат</strong>
+                            Выбирайте компактный журнал А5 (28 страниц) или большой журнал А4 (на 16 или 28 страниц).
                         </div>
                     </li>
                     <li>
@@ -584,18 +582,20 @@
         <div class="container">
             <div class="pricing-header">
                 <h2>Варианты исполнения</h2>
-                <p>Выберите формат, который подойдет именно вам</p>
+                <p>Все журналы в мягком переплете с глянцевой обложкой</p>
             </div>
             <div class="pricing-cards">
+                
+                <!-- Журнал А5 -->
                 <div class="card">
-                    <h3>Журнал</h3>
-                    <p class="format">Легкий бюджетный вариант</p>
+                    <h3>Журнал А5</h3>
+                    <p class="format">Компактный и удобный формат</p>
                     <div class="price">3 500 ₽</div>
                     <ul>
-                        <li><strong>12 страниц</strong></li>
+                        <li><strong>28 страниц</strong></li>
+                        <li>Формат А5</li>
                         <li>Мягкий переплет</li>
                         <li>Глянцевая обложка</li>
-                        <li>Яркие цветные иллюстрации</li>
                         <li>Удобен для маленьких ручек</li>
                     </ul>
                     <a href="https://max.ru/u/f9LHodD0cOLakzBstNNYEfyHyuyCqD5HHT9MV4L_Wvv586AaxOfTeBccrfw" target="_blank" rel="noopener" class="btn">
@@ -603,40 +603,44 @@
                         Заказать
                     </a>
                 </div>
+
+                <!-- Журнал А4 (16 стр) -->
                 <div class="card">
-                    <h3>Книга 14,5×21 см</h3>
-                    <p class="format">Компактный твердый переплет</p>
-                    <div class="price">4 500 ₽</div>
+                    <h3>Журнал А4 (16 стр.)</h3>
+                    <p class="format">Большой формат, меньше текста</p>
+                    <div class="price">4 000 ₽</div>
                     <ul>
-                        <li><strong>24 страницы</strong></li>
-                        <li>Твердый переплет</li>
-                        <li>Формат 14,5×21 см</li>
-                        <li>Плотная мелованная бумага</li>
-                        <li>Долговечное издание</li>
+                        <li><strong>16 страниц</strong></li>
+                        <li>Формат А4</li>
+                        <li>Мягкий переплет</li>
+                        <li>Глянцевая обложка</li>
+                        <li>Крупные иллюстрации</li>
                     </ul>
                     <a href="https://max.ru/u/f9LHodD0cOLakzBstNNYEfyHyuyCqD5HHT9MV4L_Wvv586AaxOfTeBccrfw" target="_blank" rel="noopener" class="btn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                         Заказать
                     </a>
                 </div>
+
+                <!-- Журнал А4 (28 стр) -->
                 <div class="card premium">
                     <div class="card-badge">Лучший выбор</div>
-                    <h3>Книга 17×24 см</h3>
-                    <p class="format">Большой подарочный формат</p>
-                    <div class="price">6 000 ₽</div>
+                    <h3>Журнал А4 (28 стр.)</h3>
+                    <p class="format">Максимум истории и эмоций</p>
+                    <div class="price">5 000 ₽</div>
                     <ul>
-                        <li><strong>24 страницы</strong></li>
-                        <li>Твердый переплет</li>
-                        <li>Формат 17×24 см</li>
-                        <li>Крупные детализированные иллюстрации</li>
-                        <li>Плотная бумага премиум-класса</li>
-                        <li>Идеальный подарок на память</li>
+                        <li><strong>28 страниц</strong></li>
+                        <li>Формат А4</li>
+                        <li>Мягкий переплет</li>
+                        <li>Глянцевая обложка</li>
+                        <li>Максимум иллюстраций и текста</li>
                     </ul>
                     <a href="https://max.ru/u/f9LHodD0cOLakzBstNNYEfyHyuyCqD5HHT9MV4L_Wvv586AaxOfTeBccrfw" target="_blank" rel="noopener" class="btn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                         Заказать
                     </a>
                 </div>
+
             </div>
         </div>
     </section>
@@ -644,7 +648,7 @@
     <footer>
         <div class="container">
             <div class="footer-story">
-                Сделано с любовью. Каждая книга (на 12 или 24 страницы) создается с трепетом, чтобы подарить Вашему ребенку настоящее чудо.<span class="pulse-heart">❤</span>
+                Сделано с любовью. Каждый журнал (формат А5 или А4) создается с трепетом, чтобы подарить Вашему ребенку настоящее чудо.<span class="pulse-heart">❤</span>
             </div>
             <div class="promo-block">
                 <span class="promo-heart">❤</span>
@@ -791,12 +795,8 @@
                 // ★ ДИНАМИЧЕСКИЙ РАСЧЕТ РАЗМЕРОВ ДЛЯ НОУТБУКОВ И МОБИЛОК
                 const isMobile = window.innerWidth < 768;
                 
-                // Ограничиваем ширину
                 const maxW = isMobile ? Math.min(window.innerWidth - 30, 450) : 500;
-                
-                // Ограничиваем высоту в зависимости от высоты экрана
                 const maxH = isMobile ? Math.min(window.innerHeight * 0.6, 600) : Math.min(window.innerHeight * 0.65, 520);
-                
                 const minW = isMobile ? 200 : 280;
 
                 pageFlipInstance = new St.PageFlip(flipbookEl, {
@@ -806,7 +806,7 @@
                     minWidth: minW, 
                     maxWidth: maxW,
                     minHeight: Math.round(minW * ratio),
-                    maxHeight: Math.round(maxH), // Теперь высота ограничена 65% экрана
+                    maxHeight: Math.round(maxH),
                     showCover: true,
                     usePortrait: true, 
                     mobileScrollSupport: false, 
