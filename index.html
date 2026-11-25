@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Персональная книга-сказка | Теплый премиум</title>
+    <title>Персональная книга-сказка для Вашего ребенка | С любовью </title>
+    <meta name="description" content="Создание персональных книг-сказок для детей. Журнал на 12 страниц и подарочные книги на 24 страницы. Идеальный подарок с любимыми героями.">
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
@@ -475,7 +476,7 @@
             <div class="hero-text">
                 <span class="hero-tagline">Эксклюзивный подарок</span>
                 <h1>Книга, в которой главный герой — Ваш ребенок</h1>
-                <p>Погрузите малыша в захватывающий квест с любимыми героями. Поучительная история, красочные иллюстрации и ощущение настоящего чуда, созданное специально для него.</p>
+                <p>Погрузите малыша в захватывающий квест с любимыми героями. Поучительная история на 12 или 24 страницы, красочные иллюстрации и ощущение настоящего чуда, созданное специально для него.</p>
                 <a href="#order" class="btn">Выбрать издание</a>
             </div>
             <div class="hero-image">
@@ -503,15 +504,15 @@
                     <li>
                         <span class="feature-icon">✦</span>
                         <div>
-                            <strong>Премиальные иллюстрации</strong>
-                            Плотная мелованная бумага и глубокие цвета, которые не тускнеют со временем.
+                            <strong>Разный объем</strong>
+                            Выбирайте формат: компактный журнал на 12 страниц или подарочную книгу на 24 страницы.
                         </div>
                     </li>
                     <li>
                         <span class="feature-icon">✦</span>
                         <div>
-                            <strong>Идеальный подарок</strong>
-                            Книга, которую захочется хранить на полке и перечитывать спустя годы.
+                            <strong>Премиальные иллюстрации</strong>
+                            Плотная мелованная бумага и глубокие цвета, которые не тускнеют со временем.
                         </div>
                     </li>
                 </ul>
@@ -572,6 +573,7 @@
                     <p class="format">Легкий бюджетный вариант</p>
                     <div class="price">3 500 ₽</div>
                     <ul>
+                        <li><strong>12 страниц</strong></li>
                         <li>Мягкий переплет</li>
                         <li>Глянцевая обложка</li>
                         <li>Яркие цветные иллюстрации</li>
@@ -587,6 +589,7 @@
                     <p class="format">Компактный твердый переплет</p>
                     <div class="price">4 500 ₽</div>
                     <ul>
+                        <li><strong>24 страницы</strong></li>
                         <li>Твердый переплет</li>
                         <li>Формат 14,5×21 см</li>
                         <li>Плотная мелованная бумага</li>
@@ -603,6 +606,7 @@
                     <p class="format">Большой подарочный формат</p>
                     <div class="price">6 000 ₽</div>
                     <ul>
+                        <li><strong>24 страницы</strong></li>
                         <li>Твердый переплет</li>
                         <li>Формат 17×24 см</li>
                         <li>Крупные детализированные иллюстрации</li>
@@ -621,7 +625,7 @@
     <footer>
         <div class="container">
             <div class="footer-story">
-                Сделано с любовью. Каждая книга создается с любовью и трепетом, чтобы подарить Вашему ребенку настоящее чудо.<span class="pulse-heart">❤</span>
+                Сделано с любовью. Каждая книга (на 12 или 24 страницы) создается с трепетом, чтобы подарить Вашему ребенку настоящее чудо.<span class="pulse-heart">❤</span>
             </div>
             <div class="promo-block">
                 <span class="promo-heart">❤</span>
@@ -674,23 +678,26 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc =
             'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        // ★ Новая функция: скачиваем PDF как ArrayBuffer
-        async function fetchPdfAsArrayBuffer(url) {
-            statusEl.textContent = 'Скачиваем PDF…';
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error('Не удалось скачать PDF. Код ответа: ' + response.status);
-            }
-            const arrayBuffer = await response.arrayBuffer();
-            return arrayBuffer;
-        }
-
         function withTimeout(promise, ms, msg) {
             var timer;
             var timeout = new Promise(function (_, rej) {
                 timer = setTimeout(function () { rej(new Error(msg)); }, ms);
             });
             return Promise.race([promise, timeout]).finally(function () { clearTimeout(timer); });
+        }
+
+        async function fetchPdfAsArrayBuffer(url) {
+            statusEl.textContent = 'Скачиваем PDF…';
+            let response;
+            try {
+                response = await fetch(url);
+            } catch (netErr) {
+                throw new Error('Сетевая ошибка при запросе PDF. Возможно, файл недоступен или блокируется браузером. ' + netErr.message);
+            }
+            if (!response.ok) {
+                throw new Error('Сервер вернул ошибку ' + response.status + ' (' + response.statusText + '). Файл ' + url + ' не найден или доступ к нему запрещён.');
+            }
+            return await response.arrayBuffer();
         }
 
         function canvasToJpegUrl(canvas) {
@@ -725,17 +732,15 @@
 
         async function start() {
             try {
-                // 1. Скачиваем PDF как бинарные данные (обходим MIME-тип)
                 const pdfData = await withTimeout(
                     fetchPdfAsArrayBuffer(PDF_URL),
                     20000,
-                    'PDF не удалось скачать за 20 секунд. Проверьте, что файл <b>' + PDF_URL + '</b> лежит рядом с index.html и доступен по прямой ссылке.'
+                    'PDF не удалось скачать за 20 секунд. Возможно, файл слишком большой или соединение очень медленное.'
                 );
 
-                statusEl.textContent = 'Загружаем PDF…';
+                statusEl.textContent = 'Загружаем PDF в обработчик…';
                 flipbookEl.innerHTML = '<div class="flipbook-loading">Загружаем PDF…</div>';
 
-                // 2. Передаём ArrayBuffer в PDF.js
                 const loadingTask = pdfjsLib.getDocument({ data: pdfData });
                 const pdf = await loadingTask.promise;
 
@@ -746,7 +751,6 @@
                 var baseH = Math.round(baseViewport.height);
                 var ratio = baseH / baseW;
 
-                // ── Создаём плейсхолдеры для всех страниц
                 var pageElements = [];
                 for (var i = 0; i < totalPages; i++) {
                     var div = document.createElement('div');
@@ -764,7 +768,6 @@
                 pageElements.forEach(function (el) { flipbookEl.appendChild(el); });
                 await new Promise(function (r) { requestAnimationFrame(function () { r(); }); });
 
-                // ── Инициализируем StPageFlip
                 var pageFlip = new St.PageFlip(flipbookEl, {
                     width: baseW, height: baseH,
                     size: 'stretch',
@@ -793,7 +796,6 @@
                 });
                 pageInfoEl.textContent = '1 / ' + totalPages;
 
-                // ── Рендерим страницы по порядку
                 var rendered = 0;
                 for (var p = 1; p <= totalPages; p++) {
                     statusEl.textContent = 'Готово ' + rendered + ' из ' + totalPages + ' страниц…';
@@ -815,12 +817,16 @@
 
             } catch (err) {
                 console.error(err);
-                showError('<b>Ошибка:</b> ' + (err && err.message ? err.message : err) +
-                    '<br><br>Откройте консоль (F12 → Console) и пришлите текст ошибки.');
+                showError('<b>Не удалось загрузить книгу</b><br><br>' +
+                    (err && err.message ? err.message : err) +
+                    '<br><br><b>Что проверить:</b><br>' +
+                    '1. Открывается ли файл напрямую: <a href="' + PDF_URL + '" target="_blank">' + PDF_URL + '</a><br>' +
+                    '2. Есть ли файл в корне репозитория (без папок).<br>' +
+                    '3. Прошло ли 5–10 минут после загрузки файла на GitHub (Pages обновляется с задержкой).<br>' +
+                    '4. Нет ли в настройках Pages ошибок с кастомным доменом.');
             }
         }
 
-        // Запускаем
         start();
     })();
     </script>
